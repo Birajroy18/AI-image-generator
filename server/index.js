@@ -15,7 +15,7 @@ const corsOptions = {
   origin: [
     'http://localhost:3000', // React dev server
     'http://localhost:8080', // Alternative dev port
-    'https://ai-image-generator-fpkkjkdqu-birajroy18s-projects.vercel.app', // Vercel frontend
+    'https://ai-image-generator-jipfzpfsp-birajroy18s-projects.vercel.app', // Vercel frontend (updated domain)
     process.env.FRONTEND_URL || 'https://your-netlify-site.netlify.app' // Production frontend
   ],
   credentials: true,
