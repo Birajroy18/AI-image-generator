@@ -10,14 +10,23 @@ dotenv.config();
 
 const app = express();
 
-// CORS configuration for production
+// CORS configuration for production - Allow Vercel preview and production URLs
 const corsOptions = {
-  origin: [
-    'http://localhost:3000', // React dev server
-    'http://localhost:8080', // Alternative dev port
-    'https://ai-image-generator-jipfzpfsp-birajroy18s-projects.vercel.app', // Vercel frontend (updated domain)
-    process.env.FRONTEND_URL || 'https://your-netlify-site.netlify.app' // Production frontend
-  ],
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      'http://localhost:3000', // React dev server
+      'http://localhost:8080', // Alternative dev port
+    ];
+
+    // Allow all Vercel domains (*.vercel.app)
+    if (!origin || origin.includes('vercel.app') || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else if (process.env.FRONTEND_URL && origin === process.env.FRONTEND_URL) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
