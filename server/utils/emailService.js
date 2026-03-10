@@ -1,12 +1,17 @@
 import nodemailer from "nodemailer";
 
 // Create transporter (configure with your email service)
-const transporter = nodemailer.createTransport({
-  service: "gmail", // or use host/port for other providers
+const transporter = nodemailer.createTransporter({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false, // true for 465, false for other ports
   auth: {
     user: process.env.EMAIL_USER, // Your email
     pass: process.env.EMAIL_PASS, // Your app password (not regular password)
   },
+  tls: {
+    rejectUnauthorized: false
+  }
 });
 
 // Send OTP email
