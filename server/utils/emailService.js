@@ -14,6 +14,15 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// Verify transporter configuration
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("Email transporter verification failed:", error);
+  } else {
+    console.log("Email transporter is ready to send messages");
+  }
+});
+
 // Send OTP email
 export const sendOTPEmail = async (email, otp) => {
   try {
