@@ -1,11 +1,25 @@
 {
   "name": "server",
-  "version": "1.0.0",
+
+
+
+
+
+
+
+
+
+
+
+
+
+EMAIL_PASS=your_app_passwordEMAIL_USER=your_email@gmail.com# Email configuration - For sending OTP emailsHF_MODEL_ID=stabilityai/stable-diffusion-xl-base-1.0HUGGINGFACE_TOKEN=your_huggingface_token# Hugging Face - image generationCLOUDINARY_API_SECRET=your_api_secretCLOUDINARY_API_KEY=your_api_keyCLOUDINARY_CLOUD_NAME=your_cloud_name# Cloudinary - For storing generated images (get credentials at https://cloudinary.com)  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "author": "GFG",
   "license": "ISC",
@@ -13,11 +27,13 @@
     "@google/genai": "^1.44.0",
     "@huggingface/inference": "^3.1.0",
     "axios": "^1.13.6",
+    "bcryptjs": "^3.0.3",
     "cloudinary": "^2.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "mongoose": "^8.1.1",
+    "nodemailer": "^8.0.2",
     "nodemon": "^3.0.3",
     "openai": "^3.1.0"
   }

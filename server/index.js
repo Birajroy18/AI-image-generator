@@ -4,11 +4,25 @@ import mongoose from "mongoose";
 import * as dotenv from "dotenv";
 import PostRouter from "./routes/Posts.js";
 import GenerateImageRouter from "./routes/GenerateImage.js";
+import AuthRouter from "./routes/Auth.js";
 
 dotenv.config();
 
 const app = express();
-app.use(cors());
+
+// CORS configuration for production
+const corsOptions = {
+  origin: [
+    'http://localhost:3000', // React dev server
+    'http://localhost:8080', // Alternative dev port
+    process.env.FRONTEND_URL || 'https://your-netlify-site.netlify.app' // Production frontend
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
 
@@ -25,11 +39,23 @@ app.use((err, req, res, next) => {
 
 app.use("/api/post", PostRouter);
 app.use("/api/generateImage", GenerateImageRouter);
+app.use("/api/auth", AuthRouter);
 
 //Default get
 app.get("/", async (req, res) => {
   res.status(200).json({
     message: "Hello Developers!",
+    status: "Server is running",
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Health check endpoint for Render
+app.get("/health", async (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString()
   });
 });
 
@@ -49,7 +75,8 @@ const connectDB = () => {
 const startServer = async () => {
   try {
     connectDB();
-    app.listen(8080, () => console.log("Server started on port 8080"));
+    const PORT = process.env.PORT || 8080;
+    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
   } catch (error) {
     console.log(error);
   }
