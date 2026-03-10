@@ -1,18 +1,18 @@
-import sgMail from '@sendgrid/mail';
+import Resend from 'resend';
 
-// Initialize SendGrid with API key
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+// Initialize Resend with API key
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-console.log("SENDGRID_API_KEY:", process.env.SENDGRID_API_KEY ? "Set ✓" : "NOT SET ✗");
+console.log("RESEND_API_KEY:", process.env.RESEND_API_KEY ? "Set ✓" : "NOT SET ✗");
 
-// Send OTP email using SendGrid
+// Send OTP email using Resend
 export const sendOTPEmail = async (email, otp) => {
   try {
     console.log("Attempting to send OTP email to:", email);
-    
-    const msg = {
+
+    const result = await resend.emails.send({
+      from: process.env.RESEND_FROM_EMAIL || "noreply@aimagegenerator.com",
       to: email,
-      from: process.env.SENDGRID_FROM_EMAIL || "noreply@aimagegenerator.com",
       subject: "Your Verification Code",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -29,27 +29,23 @@ export const sendOTPEmail = async (email, otp) => {
           </p>
         </div>
       `,
-    };
+    });
 
-    console.log("Sending OTP via SendGrid to:", email);
-    const result = await sgMail.send(msg);
-    console.log("OTP email sent successfully via SendGrid");
+    console.log("OTP email sent successfully via Resend", result);
     return true;
   } catch (error) {
-    console.error("Error sending OTP email via SendGrid:", error.message);
-    if (error.response) {
-      console.error("SendGrid error details:", error.response.body);
-    }
+    console.error("Error sending OTP email via Resend:", error.message);
+    console.error("Resend error details:", error);
     return false;
   }
 };
 
-// Send password reset email using SendGrid
+// Send password reset email using Resend
 export const sendPasswordResetEmail = async (email, otp) => {
   try {
-    const msg = {
+    const result = await resend.emails.send({
+      from: process.env.RESEND_FROM_EMAIL || "noreply@aimagegenerator.com",
       to: email,
-      from: process.env.SENDGRID_FROM_EMAIL || "noreply@aimagegenerator.com",
       subject: "Password Reset Code",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -66,17 +62,13 @@ export const sendPasswordResetEmail = async (email, otp) => {
           </p>
         </div>
       `,
-    };
+    });
 
-    console.log("Sending password reset via SendGrid to:", email);
-    const result = await sgMail.send(msg);
-    console.log("Password reset email sent successfully via SendGrid");
+    console.log("Password reset email sent successfully via Resend", result);
     return true;
   } catch (error) {
-    console.error("Error sending password reset email via SendGrid:", error.message);
-    if (error.response) {
-      console.error("SendGrid error details:", error.response.body);
-    }
+    console.error("Error sending password reset email via Resend:", error.message);
+    console.error("Resend error details:", error);
     return false;
   }
 };
