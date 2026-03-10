@@ -1,19 +1,6 @@
 {
   "name": "server",
-
-
-
-
-
-
-
-
-
-
-
-
-
-EMAIL_PASS=your_app_passwordEMAIL_USER=your_email@gmail.com# Email configuration - For sending OTP emailsHF_MODEL_ID=stabilityai/stable-diffusion-xl-base-1.0HUGGINGFACE_TOKEN=your_huggingface_token# Hugging Face - image generationCLOUDINARY_API_SECRET=your_api_secretCLOUDINARY_API_KEY=your_api_keyCLOUDINARY_CLOUD_NAME=your_cloud_name# Cloudinary - For storing generated images (get credentials at https://cloudinary.com)  "version": "1.0.0",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
-import { LogoutRounded, LoginRounded } from "@mui/icons-material";
+import { ExploreRounded, LogoutRounded, LoginRounded } from "@mui/icons-material";
 import Button from "./button";
 
 const Container = styled.div`
