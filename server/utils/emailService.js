@@ -1,7 +1,7 @@
-import Resend from 'resend';
+import { Resend } from 'resend';
 
 // Initialize Resend with API key
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend({ apiKey: process.env.RESEND_API_KEY });
 
 console.log("RESEND_API_KEY:", process.env.RESEND_API_KEY ? "Set ✓" : "NOT SET ✗");
 
