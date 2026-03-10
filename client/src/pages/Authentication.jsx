@@ -203,18 +203,6 @@ const LinkBtn = styled.button`
   &:hover { opacity: 0.8; }
 `;
 
-const TermsLink = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  color: #111;
-  font-weight: 600;
-  text-decoration: underline;
-  font-size: inherit;
-  &:hover { opacity: 0.8; }
-`;
-
 const PrimaryBtn = styled.button`
   width: 100%;
   padding: 14px;
@@ -229,47 +217,6 @@ const PrimaryBtn = styled.button`
   transition: background 0.2s, transform 0.1s;
   &:hover { background: #333; }
   &:active { transform: scale(0.98); }
-`;
-
-const CheckRow = styled.label`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  color: #444;
-  cursor: pointer;
-  margin-bottom: 14px;
-  a { font-weight: 600; color: #111; text-decoration: underline; }
-  input { accent-color: #111; width: 16px; height: 16px; }
-`;
-
-const OrDivider = styled.div`
-  text-align: center;
-  color: #bbb;
-  font-size: 13px;
-  margin: 8px 0 14px;
-  position: relative;
-`;
-
-const SocialRow = styled.div`
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-`;
-
-const SocialBtn = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border: none;
-  background: none;
-  font-size: 13px;
-  color: #333;
-  cursor: pointer;
-  border-radius: 8px;
-  font-weight: 500;
-  &:hover { background: #f4f4f4; }
 `;
 
 // ── OTP inputs ──────────────────────────────────────────────────────────────
