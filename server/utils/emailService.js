@@ -1,41 +1,18 @@
-import nodemailer from "nodemailer";
+import sgMail from '@sendgrid/mail';
 
-// Create transporter (configure with your email service)
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false, // false for STARTTLS
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-  tls: {
-    rejectUnauthorized: false,
-    ciphers: 'SSLv3'
-  },
-  debug: true, // Enable debug output
-  logger: true // Enable logger
-});
+// Initialize SendGrid with API key
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
-// Verify transporter configuration
-transporter.verify((error, success) => {
-  if (error) {
-    console.error("Email transporter verification failed:", error);
-  } else {
-    console.log("Email transporter is ready to send messages");
-  }
-});
+console.log("SENDGRID_API_KEY:", process.env.SENDGRID_API_KEY ? "Set ✓" : "NOT SET ✗");
 
-// Send OTP email
+// Send OTP email using SendGrid
 export const sendOTPEmail = async (email, otp) => {
   try {
     console.log("Attempting to send OTP email to:", email);
-    console.log("EMAIL_USER:", process.env.EMAIL_USER ? "Set" : "Not set");
-    console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "Set" : "Not set");
-
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
+    
+    const msg = {
       to: email,
+      from: process.env.SENDGRID_FROM_EMAIL || "noreply@aimagegenerator.com",
       subject: "Your Verification Code",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -54,28 +31,25 @@ export const sendOTPEmail = async (email, otp) => {
       `,
     };
 
-    console.log("Sending email with options:", {
-      from: mailOptions.from,
-      to: mailOptions.to,
-      subject: mailOptions.subject
-    });
-
-    const info = await transporter.sendMail(mailOptions);
-    console.log("OTP email sent successfully:", info.messageId);
+    console.log("Sending OTP via SendGrid to:", email);
+    const result = await sgMail.send(msg);
+    console.log("OTP email sent successfully via SendGrid");
     return true;
   } catch (error) {
-    console.error("Error sending OTP email:", error.message);
-    console.error("Full error details:", error);
+    console.error("Error sending OTP email via SendGrid:", error.message);
+    if (error.response) {
+      console.error("SendGrid error details:", error.response.body);
+    }
     return false;
   }
 };
 
-// Send password reset email
+// Send password reset email using SendGrid
 export const sendPasswordResetEmail = async (email, otp) => {
   try {
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
+    const msg = {
       to: email,
+      from: process.env.SENDGRID_FROM_EMAIL || "noreply@aimagegenerator.com",
       subject: "Password Reset Code",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -94,11 +68,15 @@ export const sendPasswordResetEmail = async (email, otp) => {
       `,
     };
 
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Password reset email sent:", info.messageId);
+    console.log("Sending password reset via SendGrid to:", email);
+    const result = await sgMail.send(msg);
+    console.log("Password reset email sent successfully via SendGrid");
     return true;
   } catch (error) {
-    console.error("Error sending password reset email:", error);
+    console.error("Error sending password reset email via SendGrid:", error.message);
+    if (error.response) {
+      console.error("SendGrid error details:", error.response.body);
+    }
     return false;
   }
 };
