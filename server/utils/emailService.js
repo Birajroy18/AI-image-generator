@@ -17,6 +17,10 @@ const transporter = nodemailer.createTransporter({
 // Send OTP email
 export const sendOTPEmail = async (email, otp) => {
   try {
+    console.log("Attempting to send OTP email to:", email);
+    console.log("EMAIL_USER:", process.env.EMAIL_USER ? "Set" : "Not set");
+    console.log("EMAIL_PASS:", process.env.EMAIL_PASS ? "Set" : "Not set");
+
     const mailOptions = {
       from: process.env.EMAIL_USER,
       to: email,
@@ -38,11 +42,18 @@ export const sendOTPEmail = async (email, otp) => {
       `,
     };
 
+    console.log("Sending email with options:", {
+      from: mailOptions.from,
+      to: mailOptions.to,
+      subject: mailOptions.subject
+    });
+
     const info = await transporter.sendMail(mailOptions);
-    console.log("OTP email sent:", info.messageId);
+    console.log("OTP email sent successfully:", info.messageId);
     return true;
   } catch (error) {
-    console.error("Error sending OTP email:", error);
+    console.error("Error sending OTP email:", error.message);
+    console.error("Full error details:", error);
     return false;
   }
 };
