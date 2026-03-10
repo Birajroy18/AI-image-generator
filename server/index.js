@@ -15,6 +15,7 @@ const corsOptions = {
   origin: [
     'http://localhost:3000', // React dev server
     'http://localhost:8080', // Alternative dev port
+    'https://ai-image-generator-fpkkjkdqu-birajroy18s-projects.vercel.app', // Vercel frontend
     process.env.FRONTEND_URL || 'https://your-netlify-site.netlify.app' // Production frontend
   ],
   credentials: true,
@@ -25,6 +26,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
+
+// Serve static files (for manifest.json, robots.txt, etc.)
+app.use(express.static('public'));
 
 // error handler
 app.use((err, req, res, next) => {
