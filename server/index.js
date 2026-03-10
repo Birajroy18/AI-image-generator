@@ -61,13 +61,21 @@ app.get("/health", async (req, res) => {
 
 //function to connect to mongodb
 const connectDB = () => {
+  const mongoUrl = process.env.MONGODB_URL;
+  if (!mongoUrl) {
+    console.error("❌ MONGODB_URL environment variable is not set!");
+    console.error("Please set MONGODB_URL in your environment variables.");
+    process.exit(1);
+  }
+
   mongoose.set("strictQuery", true);
   mongoose
-    .connect(process.env.MONGODB_URL)
-    .then(() => console.log("MongoDB Connected"))
+    .connect(mongoUrl)
+    .then(() => console.log("✅ MongoDB Connected Successfully"))
     .catch((err) => {
-      console.error("Failed to connect to DB");
+      console.error("❌ Failed to connect to MongoDB:");
       console.error(err);
+      process.exit(1);
     });
 };
 
