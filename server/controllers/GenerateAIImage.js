@@ -31,6 +31,7 @@ export const generateImage = async (req, res, next) => {
     const imageBlob = await hfClient.textToImage({
       model: hfModelId,
       inputs: prompt,
+      provider: "hf-inference" //free 
     });
 
     const arrayBuffer = await imageBlob.arrayBuffer();
