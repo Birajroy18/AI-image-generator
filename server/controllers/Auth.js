@@ -220,6 +220,7 @@ export const resetPassword = async (req, res, next) => {
     user.password = hashedPassword;
     user.verificationCode = null;
     user.verificationCodeExpiry = null;
+    user.isVerified = true; // add this line
     await user.save();
 
     return res.status(200).json({
