@@ -1,7 +1,6 @@
 # AI Image Generator
 
-## 🚀 Live Link
-https://ai-image-generator-jhww05sja-birajroy18s-projects.vercel.app
+## 🚀 Live Link---> https://ai-image-generator-jhww05sja-birajroy18s-projects.vercel.app
 
 A full-stack web application for generating AI images using Hugging Face and posting them to a community gallery.
 
