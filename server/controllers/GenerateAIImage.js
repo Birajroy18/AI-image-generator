@@ -5,8 +5,7 @@ import { createError } from "../error.js";
 dotenv.config();
 
 const hfToken = process.env.HUGGINGFACE_TOKEN || process.env.HF_TOKEN;
-const hfModelId =
-  process.env.HF_MODEL_ID || "black-forest-labs/FLUX.1-dev";
+const hfModelId = process.env.HF_MODEL_ID || "black-forest-labs/FLUX.1-schnell";
 
 const hfClient = hfToken ? new InferenceClient(hfToken) : null;
 
